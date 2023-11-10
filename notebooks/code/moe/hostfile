@@ -1,0 +1,2 @@
+slurmnode1 slots=2
+slurmnode2 slots=2

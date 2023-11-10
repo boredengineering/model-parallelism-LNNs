@@ -1,0 +1,7 @@
+results/
+data/
+logs/
+__pycache__/
+.idea/
+.ipynb_checkpoints/
+*.pyc

@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=http://ec2-100-26-182-79.compute-1.amazonaws.com/lab/lab
+HostUrl=http://ec2-100-26-182-79.compute-1.amazonaws.com/lab/files/code/moe/ds_config.json?_xsrf=2%7C3e7b92a4%7C209f18ef847aeadfe6f7bd3f5a5555c0%7C1654072165
