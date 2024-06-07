@@ -46,6 +46,7 @@ class Trainer:
                 with torch.set_grad_enabled(is_train):
                     # ToDo Step 2: We will need to use the model_engine instead for the forward pass
                     logits, loss = model(x, y)
+                    # logits, loss = model_engine(x, y)
                     loss = loss.mean() # collapse all losses if they are scattered on multiple gpus
                     losses.append(loss.item())
                     
