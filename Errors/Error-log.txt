@@ -1,0 +1,157 @@
+Possible Solution Error #1
+NCCL Environment Variables
+https://docs.nvidia.com/deeplearning/nccl/user-guide/docs/env.html
+
+Possible misconfiguration with NCCL_SOCKET_IFNAME is causing a failure of P2P communication in the cluster
+
+Error is pointed out in the Torch community
+https://discuss.pytorch.org/t/torch-distributed-distbackenderror-nccl-error/191509/14
+
+mudassirkhan19
+Mudassir Khan
+I landed here after searching on this issue, changing NCCL_SOCKET_IFNAME is what finally helped me, taken from here:
+https://github.com/NVIDIA/nccl/issues/1141#issuecomment-1882357793
+
+
+Use Linux ip command:
+https://www.geeksforgeeks.org/ip-command-in-linux-with-examples/
+
+Error #1
+2024-06-07 06:17:35
+!deepspeed minGPT/minGPT/runFirstDeepSpeed.py --deepspeed --deepspeed_config minGPT/minGPT/ds_config_basic.json
+
+[2024-06-07 06:17:35,008] [WARNING] [runner.py:159:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+[2024-06-07 06:17:35,339] [INFO] [runner.py:457:main] cmd = /opt/conda/bin/python3.8 -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbMCwgMSwgMiwgM119 --master_addr=127.0.0.1 --master_port=29500 minGPT/minGPT/runFirstDeepSpeed.py --deepspeed --deepspeed_config minGPT/minGPT/ds_config_basic.json
+[2024-06-07 06:17:36,382] [INFO] [launch.py:96:main] 0 NCCL_VERSION=2.11.4
+[2024-06-07 06:17:36,382] [INFO] [launch.py:103:main] WORLD INFO DICT: {'localhost': [0, 1, 2, 3]}
+[2024-06-07 06:17:36,382] [INFO] [launch.py:109:main] nnodes=1, num_local_procs=4, node_rank=0
+[2024-06-07 06:17:36,383] [INFO] [launch.py:122:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0, 1, 2, 3]})
+[2024-06-07 06:17:36,383] [INFO] [launch.py:123:main] dist_world_size=4
+[2024-06-07 06:17:36,383] [INFO] [launch.py:125:main] Setting CUDA_VISIBLE_DEVICES=0,1,2,3
+[2024-06-07 06:17:37,496] [INFO] [distributed.py:48:init_distributed] Initializing torch distributed with backend: nccl
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verifiedFiles already downloaded and verified
+
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verifiedFiles already downloaded and verified
+
+done step 1/8, re-initialized 4 dead clusters
+done step 1/8, re-initialized 4 dead clusters
+done step 1/8, re-initialized 4 dead clusters
+done step 1/8, re-initialized 4 dead clusters
+done step 2/8, re-initialized 0 dead clusters
+done step 2/8, re-initialized 0 dead clusters
+done step 2/8, re-initialized 0 dead clusters
+done step 2/8, re-initialized 0 dead clusters
+done step 3/8, re-initialized 0 dead clusters
+done step 3/8, re-initialized 0 dead clusters
+done step 3/8, re-initialized 0 dead clusters
+done step 3/8, re-initialized 0 dead clusters
+done step 4/8, re-initialized 0 dead clusters
+done step 4/8, re-initialized 0 dead clusters
+done step 4/8, re-initialized 0 dead clusters
+done step 4/8, re-initialized 0 dead clusters
+done step 5/8, re-initialized 0 dead clusters
+done step 5/8, re-initialized 0 dead clusters
+done step 5/8, re-initialized 0 dead clusters
+done step 5/8, re-initialized 0 dead clusters
+done step 6/8, re-initialized 0 dead clusters
+done step 6/8, re-initialized 0 dead clusters
+done step 6/8, re-initialized 0 dead clusters
+done step 6/8, re-initialized 0 dead clusters
+done step 7/8, re-initialized 0 dead clusters
+done step 7/8, re-initialized 0 dead clusters
+done step 7/8, re-initialized 0 dead clusters
+done step 7/8, re-initialized 0 dead clusters
+done step 8/8, re-initialized 0 dead clusters
+done step 8/8, re-initialized 0 dead clusters
+done step 8/8, re-initialized 0 dead clusters
+06/07/2024 06:17:58 - INFO - mingpt.model -   number of parameters: 1.000166e+07
+06/07/2024 06:17:58 - INFO - mingpt.model -   number of parameters: 1.000166e+07
+[2024-06-07 06:17:58,442] [INFO] [logging.py:69:log_dist] [Rank 0] DeepSpeed info: version=0.6.5, git-hash=unknown, git-branch=unknown
+done step 8/8, re-initialized 0 dead clusters
+06/07/2024 06:17:58 - INFO - mingpt.model -   number of parameters: 1.000166e+07
+06/07/2024 06:17:58 - INFO - mingpt.model -   number of parameters: 1.000166e+07
+06/07/2024 06:17:59 - INFO - torch.distributed.distributed_c10d -   Added key: store_based_barrier_key:2 to store for rank: 0
+06/07/2024 06:18:00 - INFO - torch.distributed.distributed_c10d -   Added key: store_based_barrier_key:2 to store for rank: 2
+06/07/2024 06:18:00 - INFO - torch.distributed.distributed_c10d -   Added key: store_based_barrier_key:2 to store for rank: 1
+06/07/2024 06:18:00 - INFO - torch.distributed.distributed_c10d -   Added key: store_based_barrier_key:2 to store for rank: 3
+06/07/2024 06:18:00 - INFO - torch.distributed.distributed_c10d -   Rank 3: Completed store-based barrier for key:store_based_barrier_key:2 with 4 nodes.
+06/07/2024 06:18:00 - INFO - torch.distributed.distributed_c10d -   Rank 2: Completed store-based barrier for key:store_based_barrier_key:2 with 4 nodes.
+06/07/2024 06:18:00 - INFO - torch.distributed.distributed_c10d -   Rank 1: Completed store-based barrier for key:store_based_barrier_key:2 with 4 nodes.
+06/07/2024 06:18:00 - INFO - torch.distributed.distributed_c10d -   Rank 0: Completed store-based barrier for key:store_based_barrier_key:2 with 4 nodes.
+Traceback (most recent call last):
+  File "minGPT/minGPT/runFirstDeepSpeed.py", line 82, in <module>
+    Traceback (most recent call last):
+trainer.train()
+  File "/dli/minGPT/minGPT/mingpt/trainer.py", line 109, in train
+  File "minGPT/minGPT/runFirstDeepSpeed.py", line 82, in <module>
+    model_engine, optimizer, train_loader, _ = deepspeed.initialize(
+  File "/opt/conda/lib/python3.8/site-packages/deepspeed/__init__.py", line 120, in initialize
+Traceback (most recent call last):
+      File "minGPT/minGPT/runFirstDeepSpeed.py", line 82, in <module>
+trainer.train()    
+engine = DeepSpeedEngine(args=args,
+  File "/opt/conda/lib/python3.8/site-packages/deepspeed/runtime/engine.py", line 261, in __init__
+  File "/dli/minGPT/minGPT/mingpt/trainer.py", line 109, in train
+Traceback (most recent call last):
+  File "minGPT/minGPT/runFirstDeepSpeed.py", line 82, in <module>
+        self._configure_distributed_model(model)model_engine, optimizer, train_loader, _ = deepspeed.initialize(
+
+  File "/opt/conda/lib/python3.8/site-packages/deepspeed/runtime/engine.py", line 1061, in _configure_distributed_model
+  File "/opt/conda/lib/python3.8/site-packages/deepspeed/__init__.py", line 120, in initialize
+        engine = DeepSpeedEngine(args=args,trainer.train()
+
+  File "/opt/conda/lib/python3.8/site-packages/deepspeed/runtime/engine.py", line 261, in __init__
+  File "/dli/minGPT/minGPT/mingpt/trainer.py", line 109, in train
+    trainer.train()
+  File "/dli/minGPT/minGPT/mingpt/trainer.py", line 109, in train
+        self._broadcast_model()model_engine, optimizer, train_loader, _ = deepspeed.initialize(
+
+  File "/opt/conda/lib/python3.8/site-packages/deepspeed/runtime/engine.py", line 973, in _broadcast_model
+  File "/opt/conda/lib/python3.8/site-packages/deepspeed/__init__.py", line 120, in initialize
+    self._configure_distributed_model(model)
+  File "/opt/conda/lib/python3.8/site-packages/deepspeed/runtime/engine.py", line 1061, in _configure_distributed_model
+    model_engine, optimizer, train_loader, _ = deepspeed.initialize(
+  File "/opt/conda/lib/python3.8/site-packages/deepspeed/__init__.py", line 120, in initialize
+    engine = DeepSpeedEngine(args=args,
+  File "/opt/conda/lib/python3.8/site-packages/deepspeed/runtime/engine.py", line 261, in __init__
+    engine = DeepSpeedEngine(args=args,
+  File "/opt/conda/lib/python3.8/site-packages/deepspeed/runtime/engine.py", line 261, in __init__
+    dist.broadcast(p,
+  File "/opt/conda/lib/python3.8/site-packages/torch/distributed/distributed_c10d.py", line 1165, in broadcast
+    self._configure_distributed_model(model)
+  File "/opt/conda/lib/python3.8/site-packages/deepspeed/runtime/engine.py", line 1061, in _configure_distributed_model
+    self._broadcast_model()
+  File "/opt/conda/lib/python3.8/site-packages/deepspeed/runtime/engine.py", line 973, in _broadcast_model
+    self._configure_distributed_model(model)
+  File "/opt/conda/lib/python3.8/site-packages/deepspeed/runtime/engine.py", line 1061, in _configure_distributed_model
+        dist.broadcast(p,    work = group.broadcast([tensor], opts)
+
+self._broadcast_model()  File "/opt/conda/lib/python3.8/site-packages/torch/distributed/distributed_c10d.py", line 1165, in broadcast
+
+  File "/opt/conda/lib/python3.8/site-packages/deepspeed/runtime/engine.py", line 973, in _broadcast_model
+RuntimeError    : self._broadcast_model()
+NCCL error in: /opt/pytorch/pytorch/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp:1039, internal error, NCCL version 21.1.4
+ncclInternalError: Internal check failed. This is either a bug in NCCL or due to memory corruption  File "/opt/conda/lib/python3.8/site-packages/deepspeed/runtime/engine.py", line 973, in _broadcast_model
+
+    dist.broadcast(p,
+  File "/opt/conda/lib/python3.8/site-packages/torch/distributed/distributed_c10d.py", line 1165, in broadcast
+    work = group.broadcast([tensor], opts)
+    dist.broadcast(p,
+  File "/opt/conda/lib/python3.8/site-packages/torch/distributed/distributed_c10d.py", line 1165, in broadcast
+RuntimeError: NCCL error in: /opt/pytorch/pytorch/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp:1039, internal error, NCCL version 21.1.4
+ncclInternalError: Internal check failed. This is either a bug in NCCL or due to memory corruption
+    work = group.broadcast([tensor], opts)
+RuntimeError: NCCL error in: /opt/pytorch/pytorch/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp:1039, internal error, NCCL version 21.1.4
+ncclInternalError: Internal check failed. This is either a bug in NCCL or due to memory corruption
+    work = group.broadcast([tensor], opts)
+RuntimeError: NCCL error in: /opt/pytorch/pytorch/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp:1039, internal error, NCCL version 21.1.4
+ncclInternalError: Internal check failed. This is either a bug in NCCL or due to memory corruption
+[2024-06-07 06:18:01,438] [INFO] [launch.py:178:sigkill_handler] Killing subprocess 2546
+[2024-06-07 06:18:01,438] [INFO] [launch.py:178:sigkill_handler] Killing subprocess 2547
+[2024-06-07 06:18:01,438] [INFO] [launch.py:178:sigkill_handler] Killing subprocess 2548
+[2024-06-07 06:18:01,438] [INFO] [launch.py:178:sigkill_handler] Killing subprocess 2549
+[2024-06-07 06:18:01,438] [ERROR] [launch.py:184:sigkill_handler] ['/opt/conda/bin/python3.8', '-u', 'minGPT/minGPT/runFirstDeepSpeed.py', '--local_rank=3', '--deepspeed', '--deepspeed_config', 'minGPT/minGPT/ds_config_basic.json'] exits with return code = 1
