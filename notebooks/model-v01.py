@@ -192,8 +192,12 @@ class GPT(nn.Module):
         # ****** Step 4 / ToDo: Enable here activation checkpointing of all tranformer bloks ****** 
         #                         Please iterate over all of the blocks to wrap them with 
         # deepspeed.checkpointing.checkpoint(block, x)
-        # transformer bloks
-        x = self.blocks(x)
+        # transformer blocks
+        # x = self.blocks(x)
+
+        # Replace x = self.blocks(x) with:
+        # for block in self.blocks:
+        #     x = deepspeed.checkpointing.checkpoint(block,x)
         for block in x:
             deepspeed.checkpointing.checkpoint(block, x)
         # decoder head

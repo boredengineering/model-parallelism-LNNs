@@ -16,6 +16,8 @@ https://github.com/NVIDIA/nccl/issues/1141#issuecomment-1882357793
 Use Linux ip command:
 https://www.geeksforgeeks.org/ip-command-in-linux-with-examples/
 
+https://www.baeldung.com/linux/get-mac-address
+
 Error #1
 2024-06-07 06:17:35
 !deepspeed minGPT/minGPT/runFirstDeepSpeed.py --deepspeed --deepspeed_config minGPT/minGPT/ds_config_basic.json

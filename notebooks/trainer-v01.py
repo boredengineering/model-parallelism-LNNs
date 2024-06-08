@@ -8,6 +8,7 @@ from torch.optim.lr_scheduler import LambdaLR
 from torch.utils.data.dataloader import DataLoader
 
 # ****** Step 2 / ToDo 1: Import the required library here ******
+## import #FIXME
 import deepspeed
 # import uip
 
@@ -45,8 +46,8 @@ class Trainer:
                 # forward the model
                 with torch.set_grad_enabled(is_train):
                     # ToDo Step 2: We will need to use the model_engine instead for the forward pass
-                    logits, loss = model(x, y)
-                    # logits, loss = model_engine(x, y)
+                    # logits, loss = model(x, y)
+                    logits, loss = model_engine(x, y)
                     loss = loss.mean() # collapse all losses if they are scattered on multiple gpus
                     losses.append(loss.item())
                     
@@ -104,12 +105,18 @@ class DeepSpeedTrainer:
         # ****** Step 2 / ToDo 2: Initialize deepspeed and obtain the model_engine and optimizer and train_loader
         #                         One of the things that you will need to initialize are the cmd_args 
         #                         Please pass them through the Trainer Config 
-        trainset = self.train_dataset
         
         ## parameters = #FIXME
         # parameters = filter(lambda p: p.FIXME, model.FIXME())
+        # model_engine, optimizer, train_loader, _ = deepspeed.initialize(
+        #     args=config.cmd_args,
+        #     model=FIXME,
+        #     model_parameters=FIXME,
+        #     training_data=FIXME
+        # )
+
+        trainset = self.train_dataset
         parameters = filter(lambda p: p.requires_grad, model.parameters())
-        
         model_engine, optimizer, train_loader, _ = deepspeed.initialize(
             args=config.cmd_args, 
             model=model, 

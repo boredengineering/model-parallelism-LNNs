@@ -10,6 +10,7 @@ from mingpt.model import GPT, GPTConfig, GPT1Config
 from mingpt.trainer import Trainer, DeepSpeedTrainer
 
 # ****** Step 2 / ToDo 1: import the required library here ******
+## import FIXME
 import deepspeed
 # import uip
 
@@ -20,6 +21,7 @@ def add_argument():
                         help='local rank passed from distributed launcher')
     
     # ****** Step 2 / ToDo 2: Include parsing DeepSpeed configuration arguments here ******
+    ## parser = FIXME
     parser = deepspeed.add_config_arguments(parser)
     args = parser.parse_args()
     return args
@@ -31,6 +33,7 @@ args = add_argument()
 #****** Step 2 / ToDo 3: Make sure you initialise the distributed backend with default parameters here ******
 #****** No need to set the parameters ****
 ## FIXME
+# FIXME.init_distributed()
 deepspeed.init_distributed()
 
 logging.basicConfig(
@@ -76,6 +79,7 @@ tconf = TrainerConfig(max_epochs=train_epochs, batch_size=1, learning_rate=3e-3,
                       num_workers=4,
                      cmd_args=args)
 #****** Step 2 / ToDo 4: Use the corresponding Trainer here ******
+# trainer = #FIXME(model, train_dataset, test_dataset, tconf)
 trainer = DeepSpeedTrainer(model, train_dataset, test_dataset, tconf)
 
 trainer.train()
