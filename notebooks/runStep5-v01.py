@@ -59,9 +59,12 @@ test_dataset = ImageDataset(test_data, C)
 # -
 
 # we'll do something a bit smaller
+# mconf = GPTConfig(train_dataset.vocab_size, train_dataset.block_size,
+#                   embd_pdrop=0.0, resid_pdrop=0.0, attn_pdrop=0.0,
+#                   n_layer=12, n_head=8, n_embd=256)
 mconf = GPTConfig(train_dataset.vocab_size, train_dataset.block_size,
                   embd_pdrop=0.0, resid_pdrop=0.0, attn_pdrop=0.0,
-                  n_layer=12, n_head=8, n_embd=256)
+                  n_layer=24, n_head=8, n_embd=256)
 model = GPT(mconf)
 
 tokens_per_epoch = len(train_data) * train_dataset.block_size

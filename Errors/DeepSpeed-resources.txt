@@ -4,3 +4,14 @@ https://www.deepspeed.ai/
 https://deepspeed.readthedocs.io/en/latest/index.html
 
 https://www.baeldung.com/linux/get-mac-address
+
+$ printenv <env-variable>
+
+How to Set Environment Variables in Jupyter Notebooks A Guide for Data Scientists
+https://saturncloud.io/blog/how-to-set-environment-variables-in-jupyter-notebooks-a-guide-for-data-scientists/
+
+Need Study more about Activation Checkpointing
+https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html
+
+$ free -g
+Check the memory RAM in Gygabits

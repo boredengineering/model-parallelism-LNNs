@@ -196,10 +196,11 @@ class GPT(nn.Module):
         # x = self.blocks(x)
 
         # Replace x = self.blocks(x) with:
-        # for block in self.blocks:
-        #     x = deepspeed.checkpointing.checkpoint(block,x)
-        for block in x:
-            deepspeed.checkpointing.checkpoint(block, x)
+        for block in self.blocks:
+            x = deepspeed.checkpointing.checkpoint(block,x)
+        # for block in x:
+        #     deepspeed.checkpointing.checkpoint(block, x)
+        
         # decoder head
         x = self.ln_f(x)
         logits = self.head(x)
